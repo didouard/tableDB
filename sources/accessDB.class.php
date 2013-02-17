@@ -16,7 +16,7 @@ class accessDB {
   /**************************/
   /****   Constructor   *****/
   /**************************/
-  
+   
   public function __construct() {
 
   }
