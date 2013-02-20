@@ -1,11 +1,13 @@
 <?php
 
-require_once('sources/config.php');
-require_once('libraries/sql.inc.php');
-require_once('libraries/debug.inc.php');
+require_once('config.php');
+require_once('../libraries/sql.inc.php');
+require_once('../libraries/debug.inc.php');
+require_once('../sources/fieldType.php');
 
 class tableDB {
   private $tableName;
+  private $_fields;
     
 
   /**************************/
@@ -28,21 +30,60 @@ class tableDB {
     if (!isset($this->tableName)) {
       $this->setTableName();
     }
-    return ($this->setTableName());
+    return ($this->tableName);
   }
+  
   
   /**************************/
   /****   Constructor   *****/
   /**************************/
   
   public function __construct() {
-    $sql = "DESCRIBE ?";
-    $params = array('s', $this->getDBName());
+    $sql = "DESCRIBE ".$this->getTableName();
+    $params = array();
     $array = SQL::query('apps', $sql, $params);
     
-    debug::message(print_r($array), true);
-    foreach ($array as $kfield => $pField) {
-      $this->createField($pField);
+    foreach ($array as $kField => $pField) {
+      $fieldType = new fieldType();
+      $fieldType->setName($pField['Field']);
+      $fieldType->setType($pField['Type']);
+      $fieldType->setNull($pField['Null']);
+      $fieldType->setKey($pField['key']);
+      $fieldType->setDefault($pField['Default']);
+      $fieldType->setExtra($pField['Extra']);
+      
+      $this->_fields[$pField['Field']] = $fieldType;
+    }
+  }
+  
+  /**************************/
+  /****   Overloading   *****/
+  /**************************/
+  
+  public function __set($name, $value) {
+    
+  }
+  
+  public function __get($name) {
+    
+  }
+  
+  public function __isset($name) {
+    
+  }
+  
+  public function __empty($name) {
+    
+  }
+  
+  public function __call($name, $arguments) {
+    echo "Appel de la méthode '$name' "
+    . implode(', ', $arguments). "\n";
+    
+    if (preg_match('/^set(\w+)*/', $name, $matches)) {
+      $this->setValue($matches[0], $arguments);
+    } elseif (preg_match('/^get(\w+)*/', $name, $matches)) {
+      return ($this->getValue($matches[0], $arguments));
     }
   }
   
@@ -73,7 +114,20 @@ class tableDB {
   private function createField($field) {
     $this->createSetter();
   }
+
+  private function setField($name, $arguments) {
+    
+    foreach ($this->_fields as $kField => $pField) {
+      $fieldName = strtolower($pField->getName());
+      if ($fieldName == strtolower($words)) {
+        $this->_fields[$kField]->setValue($arguments[0]);
+      }
+    }
+  }
   
+  private function getField($name, $argument) {
+    debug::message('Do get call');
+  }
 }
 
 ?>

@@ -27,7 +27,7 @@ Nous avons une table comme-ci dessous.
 Nous pouvons donc créer un objet à partir de tableDB. Le nom avant 'TableDB' est le nom de la table.
 <?php
 
-class testTableDB extend tableDB {
+class testTableDB extends tableDB {
 // methods and attributes overload
 }
 
@@ -46,11 +46,10 @@ echo 'City : '.$testTableDB->getCity();
 echo 'CP : '.$testTableDB->getPostalCode();
 
 $testTableDB3 = new testTableDB();
-if ($testTableDB3->find(array('name' => 'Doud',
-			  'city' => 'Paris))) {
-	echo 'Name '.$testTableDB3->getName().' has been found on ID : '.$testTableDB3->getID();	  
+if ($testTableDB3->find(array('name' => 'Doud', 'city' => 'Paris'))) {
+  echo 'Name '.$testTableDB3->getName().' has been found on ID : '.$testTableDB3->getID();	  
 } else {
-	echo 'Name '.$testTableDB3->getName().' has not been found';
+  echo 'Name '.$testTableDB3->getName().' has not been found';
 }
 
 $testTableDB->delete();

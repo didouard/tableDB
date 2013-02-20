@@ -18,5 +18,5 @@ $config['db']['apps-rw']['username'] = 'dev';
 $config['db']['apps-rw']['password'] = 'Hptb6SuBt4E6HPUz';
 $config['db']['apps-rw']['db_name'] = 'test';
 
-
-?>
+define('FIELDTYPE_NAMING_OBJECT', 0);
+define('FIELDTYPE_NAMING_SQL', 1);
