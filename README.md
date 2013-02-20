@@ -12,6 +12,7 @@ En la construisant, la classe va récupperer automatiquement la description de l
 A partir des informations, l'objet crée tous les setter et getter associer au champ de la table.
 
 L'objet à des méthodes génériques qui permettent d'intéragir avec la base de donnée.
+
 INSERT = Créer une ligne dans la base de donnée. Si la ligne existe déja, l'objet lira les données et mettre à jour l'objet. Retourne le dernier id inseré de l'index primaire.
 READ = Lit les données pour une ligne associer à partir de l'ID de l'index primaire. Replit l'objet avec toutes les données de la base de donnée.
 UPDATE = Met à jour les données entre un objet et la base de donnée. Retourne true si le changement à effectivement eu lieu.
